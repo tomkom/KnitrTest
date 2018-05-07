@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{natbib}
+\usepackage{graphicx}
+
+
+\title{KnitrTest}
+\author{martin.tomko }
+\date{May 2018}
+
+ 
+\begin{document}
+\maketitle
+
+\section{Introduction}
+You can type R commands in your \LaTeX{} document and they will be properly run and the output printed in the document.
+ 
+<<>>=
+# Create a sequence of numbers
+X = 2:10
+ 
+# Display basic statistical measures
+summary(X)
+@
+
+<<plot1, fig.pos="t", fig.height=4, fig.width=4, fig.cap="First plot">>=
+ 
+data <- data.frame(
+    X = sample(1:100),
+    Y = sample(c("yes", "no"), 10, replace = TRUE)
+)
+ 
+plot(data$X, main="ShareLaTeX plot", xlab="Data")
+@
+ 
+The figure \ref{fig:plot1} is simple histogram.
+
+\section{Used packages}
+
+<<label='Create References', echo=FALSE>>=
+require(knitr) # Needed for write_bib()
+
+# Load some packages to the session:
+require(xtable)
+require(ggplot2)
+
+# Select packages to cite:
+citPkgs <- names(sessionInfo()$otherPkgs)
+# Write the bibtex file:
+write_bib(citPkgs, file="R-bib.bib")
+@
+  
+
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{references.bib,R-bib.bib}
+
+
+\end{document}
